@@ -1,5 +1,12 @@
 package speelveld.view;
 
+import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
+import javafx.scene.shape.Rectangle;
+
 /**
  * Created by Beelzebub on 13/03/2018.
  */
@@ -21,21 +28,32 @@ public class GameFieldPresenter {
     //TODO
     private void addEventHandlers() {
 
-        // GameBlock[] source = view.getBlocks();
+        for (ImageView target : view.getBlocks()) {
 
-        //   for (int i = 0; i < source.length; i++) {
-        for (FieldBlock blocks : view.getBlocks()) {
-            blocks.setOnDragDetected(event -> {
+            target.setOnDragOver(event -> {
+                System.out.println("OnDragDetected");
+                if (event.getGestureSource() != target &&
+                        event.getDragboard().hasImage()) {
+                    event.acceptTransferModes(TransferMode.MOVE);
+                }
                 event.consume();
-                System.out.println("drag");
             });
         }
 
-        for (FieldBlock blocks : view.getBlocks()) {
-            blocks.setOnDragEntered(event -> {
+        for (ImageView target : view.getBlocks()) {
+
+            target.setOnDragDropped(event -> {
+                Dragboard db = event.getDragboard();
+                boolean success = false;
+                if (db.hasImage()) {
+
+                 target.setImage(db.getImage());
+
+                    event.setDropCompleted(success);
+                }
                 event.consume();
-                System.out.println("Clcik");
             });
         }
+
     }
 }

@@ -1,6 +1,7 @@
 package speelveld.view;
 
 import javafx.event.EventHandler;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.input.TransferMode;
 import javafx.scene.shape.Rectangle;
@@ -28,17 +29,23 @@ public class BlockViewPresenter {
     //TODO
     private void addEventHandlers() {
 
-        for (GameBlock blocks : view.getBlocks()) {
-                blocks.setOnDragDetected(event -> {
+        for (ImageView source : view.getBlocks()) {
+                source.setOnDragDetected(event -> {
+                    Dragboard db = source.startDragAndDrop(TransferMode.MOVE);
+                    ClipboardContent content = new ClipboardContent();
+                    content.putImage(source.getImage());
+                    db.setContent(content);
                     event.consume();
                     System.out.println("drag");
+
                 });
             }
-
-        for (GameBlock blocks : view.getBlocks()) {
-            blocks.setOnDragEntered(event -> {
+        for (ImageView source : view.getBlocks()) {
+            source.setOnDragDone(event -> {
+                if (event.getTransferMode() == TransferMode.MOVE) {
+                    source.setImage(null);
+                }
                 event.consume();
-                System.out.println("Clcik");
             });
         }
     }

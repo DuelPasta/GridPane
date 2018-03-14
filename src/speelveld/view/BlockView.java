@@ -1,5 +1,7 @@
 package speelveld.view;
 
+import javafx.geometry.Pos;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 
@@ -9,24 +11,33 @@ import javafx.scene.shape.Rectangle;
  */
 public class BlockView extends GridPane {
     public static final int BLOCK_PIECES = 3;
-    private GameBlock[] blocks;
+    //private GameBlock[] blocks;
+    private ImageView[] blocks;
 
     public BlockView() {
-        blocks = new GameBlock[BLOCK_PIECES];
+        blocks = new ImageView[BLOCK_PIECES];
         layoutnodes();
-        setHgap(30);
-        //for testing
-        setGridLinesVisible(true);
+        initialisatienodes();
+
 
     }
 
+    private void initialisatienodes() {
+
+        setAlignment(Pos.CENTER);
+        setHgap(30);
+        //for testing
+        setGridLinesVisible(true);
+    }
+
+
     void layoutnodes() {
         for (int i = 0; i < blocks.length; i++) {
-            blocks[i] = new GameBlock();
+            blocks[i] = new ImageView("Block.jpg");
             add(blocks[i], i, 0);
 
         }
     }
 
-    GameBlock[] getBlocks() {return blocks;}
+    ImageView[] getBlocks() {return blocks;}
 }

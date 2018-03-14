@@ -27,9 +27,10 @@ public class WoodenBlockPuzzleView extends BorderPane {
     }
 
     private void layoutnodes() {
-        setCenter(blockView);
-        setBottom(gameField);
+        setCenter(gameField);
+        setBottom(blockView);
     }
+
 
 }
 
